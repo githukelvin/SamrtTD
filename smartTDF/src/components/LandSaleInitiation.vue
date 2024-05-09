@@ -6,7 +6,7 @@
       <input  class="rounded-xl py-4 px-2 placeholder-color-gray-500 text-white bg-black" v-model="price" type="number" placeholder="Asking Price" required />
       <button class="bg-[#223eac] text-white w-fit mx-auto py-3 px-3 rounded-xl" type="submit">Initiate Sale</button>
     </form>
-    <p>Current Sale Status: {{ saleStatus }}</p>
+    <p class="text-center text-2xl  font-sans">Current Sale Status: {{ saleStatus }}</p>
   </div>
 </template>
 
@@ -26,8 +26,21 @@ export default {
       try {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
         const seller = accounts[0]
-        await landSaleContract.methods.initiateSale(this.landId, this.price,seller).send({ from: seller })
-        alert('Land sale initiated successfully!')
+        const tx =await landSaleContract.methods.initiateSale(this.landId, this.price).encodeABI()
+        console.log('Transaction hash:', tx.transactionHash);
+      // Sign the transaction using MetaMask (or other wallet)
+        const signedTransaction = await window.ethereum.request({
+          method: 'eth_sendTransaction',
+          params: [
+          {
+            from: seller,
+            to: "0xEE4424bbD7dB16e06950920ef10deb5f96361337", // Contract address
+            data: tx
+          }
+        ]
+      })
+
+        alert('Land sale initiated successfully!',signedTransaction)
         this.updateSaleStatus()
       } catch (error) {
         console.error('Error initiating sale:', error)

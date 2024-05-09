@@ -37,6 +37,11 @@ const router = createRouter({
           path: '/details',
           name: 'details',
           component: () => import('@/components/GetLandDetails.vue')
+        },
+        {
+          path: '/gov',
+          name: 'gov',
+          component: () => import('@/components/GovApproval.vue')
         }
       ]
     }

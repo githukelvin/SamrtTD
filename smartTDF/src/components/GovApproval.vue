@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { landSaleContract } from '@/utils/web3.js'
+import { landRegistryContract, landSaleContract } from '@/utils/web3.js'
 
 export default {
   data() {
@@ -26,9 +26,22 @@ export default {
       try {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
         const governmentOfficial = accounts[0]
-        await landSaleContract.methods
+        const transactionData = landSaleContract.methods
           .approveTransfer(this.approved)
-          .send({ from: governmentOfficial })
+          .encodeABI()
+
+        // Sign the transaction using MetaMask (or other wallet)
+        const signedTransaction = await window.ethereum.request({
+          method: 'eth_sendTransaction',
+          params: [
+            {
+              from: governmentOfficial,
+              to: landRegistryContract.options.address, // Contract address
+              data: transactionData
+            }
+          ]
+        })
+
         alert('Transfer approval submitted successfully!')
         this.updateGovernmentApprovalStatus()
         this.updateSaleStatus()
