@@ -7,34 +7,34 @@
 </template>
 
 <script>
-import { landSaleContract } from '@/utils/web3';
+import { landSaleContract } from '@/utils/web3.js'
 
 export default {
   data() {
     return {
-      saleStatus: '',
-    };
+      saleStatus: ''
+    }
   },
   methods: {
     async cancelSale() {
       try {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const owner = accounts[0]; // Replace with the appropriate account address
-        await landSaleContract.methods.cancelSale().send({ from: owner });
-        alert('Sale cancelled successfully!');
-        this.updateSaleStatus();
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+        const owner = accounts[0] // Replace with the appropriate account address
+        await landSaleContract.methods.cancelSale().send({ from: owner })
+        alert('Sale cancelled successfully!')
+        this.updateSaleStatus()
       } catch (error) {
-        console.error('Error cancelling sale:', error);
-        alert('Error cancelling sale. Please try again.');
+        console.error('Error cancelling sale:', error)
+        alert('Error cancelling sale. Please try again.')
       }
     },
     async updateSaleStatus() {
-      const status = await landSaleContract.methods.state().call();
-      this.saleStatus = ['Listed', 'InProgress', 'Completed', 'Cancelled'][status];
-    },
+      const status = await landSaleContract.methods.state().call()
+      this.saleStatus = ['Listed', 'InProgress', 'Completed', 'Cancelled'][status]
+    }
   },
   mounted() {
-    this.updateSaleStatus();
-  },
-};
+    this.updateSaleStatus()
+  }
+}
 </script>

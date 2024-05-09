@@ -11,36 +11,36 @@
 </template>
 
 <script>
-import { landSaleContract } from '@/utils/web3';
+import { landSaleContract } from '@/utils/web3.js'
 
 export default {
   data() {
     return {
       landId: '',
       price: '',
-      saleStatus: '',
-    };
+      saleStatus: ''
+    }
   },
   methods: {
     async initiateSale() {
       try {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const seller = accounts[0];
-        await landSaleContract.methods.initiateSale(this.landId, this.price).send({ from: seller });
-        alert('Land sale initiated successfully!');
-        this.updateSaleStatus();
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+        const seller = accounts[0]
+        await landSaleContract.methods.initiateSale(this.landId, this.price).send({ from: seller })
+        alert('Land sale initiated successfully!')
+        this.updateSaleStatus()
       } catch (error) {
-        console.error('Error initiating sale:', error);
-        alert('Error initiating sale. Please try again.');
+        console.error('Error initiating sale:', error)
+        alert('Error initiating sale. Please try again.')
       }
     },
     async updateSaleStatus() {
-      const status = await landSaleContract.methods.state().call();
-      this.saleStatus = ['Listed', 'InProgress', 'Completed', 'Cancelled'][status];
-    },
+      const status = await landSaleContract.methods.state().call()
+      this.saleStatus = ['Listed', 'InProgress', 'Completed', 'Cancelled'][status]
+    }
   },
   mounted() {
-    this.updateSaleStatus();
-  },
-};
+    this.updateSaleStatus()
+  }
+}
 </script>

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { landRegistryContract } from '@/utils/web3';
+import { landRegistryContract } from '@/utils/web3.js'
 
 export default {
   data() {
@@ -24,14 +24,14 @@ export default {
       acreage: '',
       location: '',
       zoning: '',
-      existingContract: false,
-    };
+      existingContract: false
+    }
   },
   methods: {
     async registerLand() {
       try {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const owner = accounts[0];
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+        const owner = accounts[0]
         await landRegistryContract.methods
           .registerLand(
             this.landId,
@@ -41,13 +41,13 @@ export default {
             this.zoning,
             this.existingContract
           )
-          .send({ from: owner });
-        alert('Land registered successfully!');
+          .send({ from: owner })
+        alert('Land registered successfully!')
       } catch (error) {
-        console.error('Error registering land:', error);
-        alert('Error registering land. Please try again.');
+        console.error('Error registering land:', error)
+        alert('Error registering land. Please try again.')
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>

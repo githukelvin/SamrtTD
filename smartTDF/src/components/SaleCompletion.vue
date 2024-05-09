@@ -7,34 +7,34 @@
 </template>
 
 <script>
-import { landSaleContract } from '@/utils/web3';
+import { landSaleContract } from '@/utils/web3.js'
 
 export default {
   data() {
     return {
-      saleStatus: '',
-    };
+      saleStatus: ''
+    }
   },
   methods: {
     async finalizeSale() {
       try {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const owner = accounts[0]; // Replace with the appropriate account address
-        await landSaleContract.methods.finalizeSale().send({ from: owner });
-        alert('Sale finalized successfully!');
-        this.updateSaleStatus();
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+        const owner = accounts[0] // Replace with the appropriate account address
+        await landSaleContract.methods.finalizeSale().send({ from: owner })
+        alert('Sale finalized successfully!')
+        this.updateSaleStatus()
       } catch (error) {
-        console.error('Error finalizing sale:', error);
-        alert('Error finalizing sale. Please try again.');
+        console.error('Error finalizing sale:', error)
+        alert('Error finalizing sale. Please try again.')
       }
     },
     async updateSaleStatus() {
-      const status = await landSaleContract.methods.state().call();
-      this.saleStatus = ['Listed', 'InProgress', 'Completed', 'Cancelled'][status];
-    },
+      const status = await landSaleContract.methods.state().call()
+      this.saleStatus = ['Listed', 'InProgress', 'Completed', 'Cancelled'][status]
+    }
   },
   mounted() {
-    this.updateSaleStatus();
-  },
-};
+    this.updateSaleStatus()
+  }
+}
 </script>
