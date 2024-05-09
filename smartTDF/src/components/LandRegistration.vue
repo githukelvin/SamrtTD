@@ -86,8 +86,15 @@ const registerLand = async () => {
         }
       ]
     })
-
+  alert("Land  Succesfully added")
     console.log('Transaction signed:', signedTransaction)
+    landId.value=''
+      owner.value=''
+      acreage.value=''
+      location.value=''
+      zoning.value=''
+    console.log(landRegistryContract.methods.getAllLands().call())
+
   } catch (error) {
     console.error('Error signing and registering land:', error)
     alert('Error registering land. Please check your details and try again.')
