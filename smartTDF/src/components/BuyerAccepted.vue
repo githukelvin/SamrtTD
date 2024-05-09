@@ -2,9 +2,22 @@
   <div>
     <h2 class="text-2xl text-center">Accept Offer</h2>
     <form @submit.prevent="acceptOffer" class="w-[20em] mx-auto flex flex-col gap-5">
-      <input class="py-3 rounded-xl placeholder-color-gray-500 text-white bg-black px-3" v-model="paymentMethod" placeholder="Payment Method (ETH or Token Address)" required />
-      <input class="py-3 rounded-xl placeholder-color-gray-500 text-white bg-black px-3" v-model="paymentAmount" type="number" placeholder="Payment Amount" required />
-      <button class="bg-[#24eafa] py-3 px-4 w-fit mx-auto rounded"  type="submit">Accept Offer</button>
+      <input
+        class="py-3 rounded-xl placeholder-color-gray-500 text-white bg-black px-3"
+        v-model="paymentMethod"
+        placeholder="Payment Method (ETH or Token Address)"
+        required
+      />
+      <input
+        class="py-3 rounded-xl placeholder-color-gray-500 text-white bg-black px-3"
+        v-model="paymentAmount"
+        type="number"
+        placeholder="Payment Amount"
+        required
+      />
+      <button class="bg-[#24eafa] py-3 px-4 w-fit mx-auto rounded" type="submit">
+        Accept Offer
+      </button>
     </form>
     <p class="text-center">Current Sale Status: {{ saleStatus }}</p>
   </div>
@@ -19,6 +32,9 @@ export default {
   },
   methods: {
     async acceptOffer() {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+      const buyer = accounts[0]
+      console.log(buyer)
       try {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
         const buyer = accounts[0]

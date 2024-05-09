@@ -1,24 +1,20 @@
 import Web3 from 'web3'
-import RegistryABI from "../../../hardhat/artifacts/contracts/LandRegistry.sol/LandRegistry.json" assert {type:'json'};
-import SaleABI from "../../../hardhat/artifacts/contracts/LandSale.sol/LandSale.json"  assert {type:'json'};
-
+import RegistryABI from '../../../hardhat/artifacts/contracts/LandRegistry.sol/LandRegistry.json' assert { type: 'json' }
+import SaleABI from '../../../hardhat/artifacts/contracts/LandSale.sol/LandSale.json' assert { type: 'json' }
+import { environment } from './config.js'
 // Replace with your Ethereum node URL
 const web3 = new Web3('https://sepolia.base.org')
 
-import 'dotenv/config';
-
-const privateKey = process.env.PRIVATE_KEY;
-
-
-const account = web3.eth.accounts.privateKeyToAccount(privateKey);
-
+// const privateKey = process.env.PRIVATE_KEY;
+// const privateKey = process.env.PRIVATE_KEY;
+const privateKey = environment.apiKey
+//
+// console.log(environment.apiKey)
+const account = web3.eth.accounts.privateKeyToAccount(privateKey)
 
 // console.log('Account address:', account.address);
 //
-// console.log(account)
-
-
-
+console.log(account)
 
 // Replace with the deployed contract addresses and ABIs
 const landRegistryAddress = '0x8D8b54f7C6064F25558D84ddf6546210aD3a7241'

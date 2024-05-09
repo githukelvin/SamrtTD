@@ -27,6 +27,16 @@ const router = createRouter({
           path: '/sell',
           name: 'Sell',
           component: () => import('@/components/LandSaleInitiation.vue')
+        },
+        {
+          path: '/survey',
+          name: 'survey',
+          component: () => import('@/components/LandRegistration.vue')
+        },
+        {
+          path: '/details',
+          name: 'details',
+          component: () => import('@/components/GetLandDetails.vue')
         }
       ]
     }
