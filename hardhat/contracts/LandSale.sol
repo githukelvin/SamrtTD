@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./LandRegistry.sol";
 
 
-contract LandSale is Ownable {
+contract LandSale  {
     enum SaleState { Listed, InProgress, Completed, Cancelled }
     SaleState public state;
 
@@ -19,6 +19,7 @@ contract LandSale is Ownable {
     uint256 public depositedAmount;
 
     mapping(address => bool) public isSurveyor;
+    mapping(address => bool) public isOwner;
     mapping(address => bool) public isGovernmentOfficial;
 
     bool public landVerified;
@@ -35,9 +36,7 @@ contract LandSale is Ownable {
     event SaleCompleted(address buyer);
     event SaleCancelled();
 
- constructor(address _landRegistryAddress) Ownable(msg.sender) { 
-  landRegistry = LandRegistry(_landRegistryAddress);
-}
+ 
 
     function initiateSale(uint256 _landId, uint256 _price) public {
         require(state == SaleState.Listed, "Sale already initiated");
@@ -65,6 +64,11 @@ contract LandSale is Ownable {
 
     modifier onlyGovernment() {
         require(isGovernmentOfficial[msg.sender], "Unauthorized access (government)");
+        _;
+    }
+
+       modifier onlyOwner() {
+        require(isOwner[msg.sender], "Unauthorized access (government)");
         _;
     }
 

@@ -93,7 +93,6 @@ const registerLand = async () => {
       acreage.value=''
       location.value=''
       zoning.value=''
-    console.log(landRegistryContract.methods.getAllLands().call())
 
   } catch (error) {
     console.error('Error signing and registering land:', error)
